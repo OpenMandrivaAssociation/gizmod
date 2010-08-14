@@ -10,7 +10,7 @@ Source0:	http://downloads.sourceforge.net/project/%{name}/%{name}/%{version}/%{n
 Patch0:		gizmod-3.5-mdv-fix_build_errors.patch
 Patch1:		gizmod-3.5-mdv-fix_cmake_dependencies.patch
 URL:		http://gizmod.sourceforge.net
-Group:		Userspace/Input
+Group:		System/Configuration/Hardware 
 License:	Apache License V2.0
 
 BuildRoot: %{_tmppath}/%{name}-%{version}
