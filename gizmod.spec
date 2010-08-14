@@ -5,7 +5,7 @@
 Name: 		%{name}
 Version:	%{version}
 Release:	%{release}
-Summary:	Gizmod is an advanced input handler for keyboards, mice, etc...
+Summary:	Gizmod is an advanced input handler for keyboards, mice, and joypads
 Source0:	http://downloads.sourceforge.net/project/%{name}/%{name}/%{version}/%{name}-%{version}.tar.bz2
 Patch0:		gizmod-3.5-mdv-fix_build_errors.patch
 Patch1:		gizmod-3.5-mdv-fix_cmake_dependencies.patch
