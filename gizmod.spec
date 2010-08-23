@@ -17,9 +17,8 @@ BuildRoot: %{_tmppath}/%{name}-%{version}
 BuildRequires: boost-devel
 BuildRequires: libvisual-devel
 BuildRequires: alsa-lib-devel
-BuildRequires: X11-devel
+BuildRequires: libx11-devel
 BuildRequires: cmake
-BuildRequires: gcc-c++
 BuildRequires: python-devel
 
 %description
@@ -36,11 +35,13 @@ send input events to another machine with a locally connected device.
 
 %build
 %cmake
-%make CFLAGS="%{optflags}" LDFLAGS="%{ldflags}"
+%make
 
 %install
 rm -rf %{buildroot}
 %makeinstall_std -C build
+
+rm -fr %buildroot%_libdir/*.so %buildroot%_includedir
 
 %clean
 rm -rf %{buildroot}
@@ -49,7 +50,6 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS NOTICE README TODO
 %{_bindir}/*
-%{_libdir}/*
-%{_includedir}/*
+%{_libdir}/*.so.*
+%{_libdir}/libvisual-0.4
 %{_sysconfdir}/*
-
