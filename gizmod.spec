@@ -34,6 +34,7 @@ send input events to another machine with a locally connected device.
 %patch1 -p1
 
 %build
+export CXXFLAGS="%optflags -DBOOST_FILESYSTEM_VERSION=2"
 %cmake
 %make
 
