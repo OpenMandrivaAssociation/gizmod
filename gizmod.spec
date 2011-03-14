@@ -1,6 +1,6 @@
 %define name	gizmod
 %define version	3.5
-%define release	%mkrel 3
+%define release	%mkrel 4
 
 Name: 		%{name}
 Version:	%{version}
