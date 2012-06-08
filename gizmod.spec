@@ -11,10 +11,10 @@ Patch1:		gizmod-3.5-mdv-fix_cmake_dependencies.patch
 
 BuildRequires:	cmake
 BuildRequires:	boost-devel
-BuildRequires:	libvisual-devel
-BuildRequires:	alsa-lib-devel
-BuildRequires:	libx11-devel
-BuildRequires:	python-devel
+BuildRequires:	pkgconfig(alsa)
+BuildRequires:	pkgconfig(libvisual-0.4)
+BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(x11)
 
 %description
 Gizmod is an input handler that binds to a specific device and can
