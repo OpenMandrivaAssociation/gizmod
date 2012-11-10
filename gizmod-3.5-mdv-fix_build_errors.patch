@@ -1,0 +1,10 @@
+--- gizmod-3.5/libGizmod/CPUUsage.cpp	2008-11-03 13:38:15.000000000 +0100
++++ gizmod-3.5/libGizmod/CPUUsage.cpp	2010-08-14 02:54:52.830186174 +0200
+@@ -32,6 +32,7 @@
+ #include "../libH/UtilTime.hpp"
+ #include <fstream>
+ #include <iostream>
++#include <string.h>
+ #include <boost/filesystem/operations.hpp>
+ #include <boost/filesystem/exception.hpp>
+ #include <boost/thread/thread.hpp>

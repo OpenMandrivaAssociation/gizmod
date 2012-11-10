@@ -1,0 +1,97 @@
+--- gizmod-3.5/libGizmod/CMakeLists.txt	2008-08-24 18:34:13.000000000 +0200
++++ gizmod-3.5/libGizmod/CMakeLists.txt	2010-08-14 03:51:36.424187184 +0200
+@@ -32,6 +32,9 @@
+ ##############
+ 
+ find_package(Boost REQUIRED QUIET)
++	if (NOT BOOST_SYSTEM_FOUND)
++		message(FATAL_ERROR "Boost system was not found!\nPlease check your boost development library installation.")
++	endif (NOT BOOST_SYSTEM_FOUND)
+ 	if (NOT BOOST_FILESYSTEM_FOUND)
+ 		message(FATAL_ERROR "Boost filesystem was not found!\nPlease check your boost development library installation.")
+ 	endif (NOT BOOST_FILESYSTEM_FOUND)
+@@ -118,6 +121,7 @@
+ 
+ target_link_libraries(Gizmod
+ 	H
++	${BOOST_SYSTEM_LIBRARY}
+ 	${BOOST_FILESYSTEM_LIBRARY}
+ 	${BOOST_THREAD_LIBRARY}
+ 	${BOOST_SERIALIZATION_LIBRARY}
+--- gizmod-3.5/cmake/Modules/FindBoost.cmake	2007-11-07 13:21:58.000000000 +0100
++++ gizmod-3.5/cmake/Modules/FindBoost.cmake	2010-08-14 04:00:31.605642307 +0200
+@@ -9,6 +9,7 @@
+ #  BOOST_LIBRARIES_SUFFIX - Boost libraries name suffix (e.g -vc71-mt-gd-1_34, -gcc41-mt...)
+ #
+ #  BOOST_DATE_TIME_FOUND               True if Boost Date Time was found.
++#  BOOST_SYSTEM_FOUND                  True if Boost System was found.
+ #  BOOST_FILESYSTEM_FOUND              True if Boost Filesystem was found.
+ #  BOOST_IOSTREAMS_FOUND               True if Boost Iostream was found.
+ #  BOOST_PRG_EXEC_MONITOR_FOUND        True if Boost Program Exec Monitor was found.
+@@ -23,6 +24,7 @@
+ #  BOOST_WSERIALIZATION_FOUND          True if Boost WSerialization was found.
+ #
+ #  BOOST_DATE_TIME_LIBRARY             The Boost Date Time libary.
++#  BOOST_SYSTEM_LIBRARY                The Boost System libary.
+ #  BOOST_FILESYSTEM_LIBRARY            The Boost Filesystem libary.
+ #  BOOST_IOSTREAMS_LIBRARY             The Boost Iostream libary.
+ #  BOOST_PRG_EXEC_MONITOR_LIBRARY      The Boost Program libary.
+@@ -193,6 +195,15 @@
+ 
+     endif (NOT BOOST_DATE_TIME_LIBRARY)
+ 
++    if (NOT BOOST_SYSTEM_LIBRARY)
++      find_library(BOOST_SYSTEM_LIBRARY
++        NAMES
++          boost_system${TMP_BOOST_LIBRARIES_SUFFIX}
++        PATHS
++          ${BOOST_LIBRARIES_SEARCH_DIRS}
++      )
++    endif (NOT BOOST_SYSTEM_LIBRARY)
++
+     if (NOT BOOST_FILESYSTEM_LIBRARY)
+       find_library(BOOST_FILESYSTEM_LIBRARY
+         NAMES
+@@ -316,6 +327,9 @@
+     if (BOOST_DATE_TIME_LIBRARY)
+       set(BOOST_DATE_TIME_FOUND TRUE)
+     endif (BOOST_DATE_TIME_LIBRARY)
++    if (BOOST_SYSTEM_LIBRARY)
++      set(BOOST_SYSTEM_FOUND TRUE)
++    endif (BOOST_SYSTEM_LIBRARY)
+     if (BOOST_FILESYSTEM_LIBRARY)
+       set(BOOST_FILESYSTEM_FOUND TRUE)
+     endif (BOOST_FILESYSTEM_LIBRARY)
+@@ -365,6 +379,12 @@
+       ${BOOST_DATE_TIME_LIBRARY}
+     )
+   endif (BOOST_DATE_TIME_FOUND)
++  if (BOOST_SYSTEM_FOUND)
++    set(BOOST_LIBRARIES
++      ${BOOST_LIBRARIES}
++      ${BOOST_SYSTEM_LIBRARY}
++    )
++  endif (BOOST_SYSTEM_FOUND)
+   if (BOOST_FILESYSTEM_FOUND)
+     set(BOOST_LIBRARIES
+       ${BOOST_LIBRARIES}
+--- gizmod-3.5/cmake/Modules/DefineInstallationPaths.cmake	2007-11-13 21:51:11.000000000 +0100
++++ gizmod-3.5/cmake/Modules/DefineInstallationPaths.cmake	2010-08-14 04:47:45.252790739 +0200
+@@ -99,7 +99,6 @@
+   SET(SYSCONF_INSTALL_DIR
+     "${EXEC_INSTALL_PREFIX}/etc"
+     CACHE PATH "The ${APPLICATION_NAME} sysconfig install dir (default prefix/etc)"
+-    FORCE
+   )
+   SET(MAN_INSTALL_DIR
+     "${SHARE_INSTALL_PREFIX}/man"
+--- gizmod-3.5/libGizmod/CMakeLists.txt	2010-08-14 04:55:20.650923046 +0200
++++ gizmod-3.5/libGizmod/CMakeLists.txt	2010-08-14 05:03:55.278924621 +0200
+@@ -148,6 +148,5 @@
+ 		${CMAKE_CURRENT_BINARY_DIR}/libGizmod.so.${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}
+ 		${CMAKE_CURRENT_BINARY_DIR}/libGizmod.so.${CPACK_PACKAGE_VERSION_MAJOR}
+ 		${CMAKE_CURRENT_BINARY_DIR}/libGizmod.so
+-	DESTINATION 
+-		lib
++	DESTINATION ${LIB_INSTALL_DIR}
+ )
