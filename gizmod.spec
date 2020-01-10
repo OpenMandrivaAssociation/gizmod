@@ -25,7 +25,7 @@ send input events to another machine with a locally connected device.
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 
 %build
 export CXXFLAGS="%optflags -DBOOST_FILESYSTEM_VERSION=2"
